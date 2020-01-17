@@ -11,13 +11,24 @@
  */
 
 #include <Arduino.h>
+#include <GPSSensor.h>
+#include <ThermalCam.h>
+
+GPSSensor gps;
+ThermalCam cam;
 
 void setup()
 {
-
+	Serial.begin(9600);
+    gps.begin();
+	cam.begin();
+	delay(1000);
 }
 
 void loop()
 {
-
+	gps.readGPSData();
+	Serial.println(cam.getPixelSentence());
+	Serial.print(gps.getFormattedGPSSentence());
+	delay(1000);
 }
