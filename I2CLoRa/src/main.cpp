@@ -13,6 +13,7 @@ int firstMessageLoc = 0;
 
 void i2cRecv(int number)
 {
+
 	while(Wire.available() && outgoingLoc < 254)
 	{
 		outgoing[outgoingLoc] = Wire.read();
@@ -35,7 +36,7 @@ void messageRequest()
 {
 	if(lastMessageLoc == firstMessageLoc)
 		Wire.write('\0');
-	
+
 	else
 	{
 		char * tempChr = incomingBuffer[firstMessageLoc ++];
@@ -47,7 +48,7 @@ void messageRequest()
 
 		firstMessageLoc = firstMessageLoc%10;
 	}
-	
+
 }
 
 void setup()
@@ -56,17 +57,29 @@ void setup()
 	Wire.onReceive(i2cRecv);
 	Wire.onRequest(messageRequest);
 	radio.begin();
-	
+
 }
 
 void loop()
 {
-
+	if(Serial.available())
+	{
+		radio.sendString(Serial.readString().c_str());
+	}
 	if(radio.receiveString(incomingBuffer[lastMessageLoc]))
 	{
+		Serial.println(lastMessageLoc);
+		Serial.println(incomingBuffer[lastMessageLoc]);
 		lastMessageLoc++;
 		lastMessageLoc = lastMessageLoc%10;
+
+		for(int i = 0; i < 10; i++)
+		{
+			Serial.print("|");
+			Serial.print(incomingBuffer[i]);
+			Serial.print("| ");
+		}
 	}
 
-	delay(25);
+	delay(50);
 }

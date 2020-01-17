@@ -1,12 +1,12 @@
-/*  
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/. 
- * 
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
  * Author: Lena Voytek
- * 
+ *
  * main.cpp
- * Handles all sensor interaction and communication on the receiver 
+ * Handles all sensor interaction and communication on the receiver
  * module
  */
 
@@ -15,14 +15,15 @@
 #include <GPSSensor.h>
 #include <ThermalCam.h>
 #include <BluetoothSniffer.h>
-
-#define TASKER_MAX_TASKS 18
+#include <LoRaCommunicator.h>
 
 Tasker tasker(true);
 
 GPSSensor gps;
 ThermalCam cam;
 BluetoothSniffer sniffy;
+LoRaCommunicator comm;
+
 
 void runBLEScan(int)
 {
@@ -41,17 +42,26 @@ void getIRUpdate(int)
 	Serial.println(cam.getPixelSentence());
 }
 
+void getRadioCmd(int)
+{
+	Serial.print("|");
+	Serial.print(comm.receive());
+	Serial.println("|");
+}
+
 void setup()
 {
 	Serial.begin(9600);
-    gps.begin();
+  gps.begin();
 	cam.begin();
 	sniffy.begin();
+	comm.begin();
 	delay(1000);
 
-	tasker.setInterval(runBLEScan, 40000, 0);
-	tasker.setInterval(getGPSUpdate, 3000, 1);
-	tasker.setInterval(getIRUpdate, 5000, 1);
+	//tasker.setInterval(runBLEScan, 40000, 0);
+	//tasker.setInterval(getGPSUpdate, 3000, 1);
+	//tasker.setInterval(getIRUpdate, 5000, 1);
+	tasker.setInterval(getRadioCmd, 1000, 0);
 
 	tasker.run();
 }

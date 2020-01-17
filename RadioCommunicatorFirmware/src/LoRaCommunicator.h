@@ -1,10 +1,10 @@
-/*  
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/. 
- * 
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
  * Author: Lena Voytek
- * 
+ *
  * LoRaCommunicator.h
  * Handles sending and receiving of radio info over 915MHz LoRa radio
  */
@@ -39,46 +39,41 @@ public:
     void begin()
     {
         pinMode(RADIO_CSPIN, OUTPUT);
-        this->CSEnable(true);
+        digitalWrite(RADIO_CSPIN, LOW);
         pinMode(LED_BUILTIN, OUTPUT);
 
         pinMode(RFM95_RST, OUTPUT);
-		
-		// Reset the Radio
-		digitalWrite(RFM95_RST, HIGH);
-		delay(1000);
-		digitalWrite(RFM95_RST, LOW);
-		delay(10);
-		digitalWrite(RFM95_RST, HIGH);
-		delay(10);
+
+    		// Reset the Radio
+    		digitalWrite(RFM95_RST, HIGH);
+    		delay(1000);
+    		digitalWrite(RFM95_RST, LOW);
+    		delay(10);
+    		digitalWrite(RFM95_RST, HIGH);
+    		delay(10);
 
         this->rf95.init();
         this->rf95.setFrequency(this->frequency);
         this->rf95.setTxPower(23, false);
-        this->CSEnable(false);
         digitalWrite(LED_BUILTIN, LOW);
     }
 
     void sendString(const char * str)
     {
         digitalWrite(LED_BUILTIN, HIGH);
-        this->CSEnable(true);
         this->rf95.send((byte *) str, strlen(str) + 1);
         this->rf95.waitPacketSent();
-        this->CSEnable(false);
         digitalWrite(LED_BUILTIN, LOW);
+        Serial.println(str);
     }
 
     bool receiveString(char * output)
     {
-        this->CSEnable(true);
         uint8_t len;
         bool received = this->rf95.recv((byte *) output, &len);
 
-        this->CSEnable(false);
         return received;
     }
-
 };
 
 #endif
