@@ -19,13 +19,13 @@
 #include <BLEScan.h>
 #include <BLEAdvertisedDevice.h>
 
-#define SCAN_TIME 30
+#define SCAN_TIME 10
 
 typedef struct BTDataPoint_t
 {
     int rssi;
-    float gpslat;
-    float gpslng;
+    double gpslat;
+    double gpslng;
     float gpsalt;
     BTDataPoint_t * nextDataPoint;
 } BTDataPoint;
@@ -33,8 +33,8 @@ typedef struct BTDataPoint_t
 typedef struct BTDevice_t
 {
     char macAddress[18];
-    float lat;
-    float lng;
+    double lat;
+    double lng;
     float alt;
     BTDataPoint * dataPoints;
 
@@ -62,14 +62,14 @@ protected:
         tail->next->dataPoints = firstData;
     }
 
-    BTDataPoint createDataPoint(int rssi, float lat, float lng, float alt)
+    BTDataPoint * createDataPoint(int rssi, double lat, double lng, float alt)
     {
-        BTDataPoint dp;
-        dp.rssi = rssi;
-        dp.gpslat = lat;
-        dp.gpslng = lng;
-        dp.gpsalt = alt;
-        dp.nextDataPoint = NULL;
+        BTDataPoint * dp = (BTDataPoint *) malloc(sizeof(BTDataPoint));
+        dp->rssi = rssi;
+        dp->gpslat = lat;
+        dp->gpslng = lng;
+        dp->gpsalt = alt;
+        dp->nextDataPoint = NULL;
 
         return dp;
     }
@@ -106,7 +106,7 @@ public:
 
     }
 
-    void scan(float lat, float lng, float alt)
+    void scan(double lat, double lng, float alt)
     {
         BLEScan *pBLEScan = BLEDevice::getScan(); //create new scan
         pBLEScan->setAdvertisedDeviceCallbacks(new AdvertisedDeviceCallbacks());
@@ -128,18 +128,23 @@ public:
 			{
 				this->head = (BTDevice *) malloc(sizeof(BTDevice));
         		strncpy(this->head->macAddress, addr, 17);
-        		this->head->dataPoints = &this->createDataPoint(rssi, lat, lng, alt);
+        		this->head->dataPoints = this->createDataPoint(rssi, lat, lng, alt);
 			}
 			else
 			{
 				BTDevice * dev = this->deviceExists(addr);
 				if(dev != NULL)
-					this->addDataPoint(dev, &this->createDataPoint(rssi, lat, lng, alt));
+					this->addDataPoint(dev, this->createDataPoint(rssi, lat, lng, alt));
 				else
-					this->addDevice(addr, &this->createDataPoint(rssi, lat, lng, alt));
+					this->addDevice(addr, this->createDataPoint(rssi, lat, lng, alt));
 			}
 			
 		}
+	}
+
+	void displayDatas()
+	{
+		
 	}
 };
 

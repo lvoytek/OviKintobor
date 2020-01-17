@@ -58,10 +58,25 @@ public:
 		return this->GPS.satellites.value();
 	}
 
+	double getLat()
+	{
+		return this->GPS.location.lat();
+	}
+
+	double getLng()
+	{
+		return this->GPS.location.lng();
+	}
+
+	float getAlt()
+	{
+		return this->GPS.altitude.meters();
+	}
+
 	// Get a JSON formatted GPS location/time sentence
 	char * getFormattedGPSSentence()
 	{
-		snprintf(this->sentenceBuffer, sizeof(this->sentenceBuffer), "{\"datetime\":\"%u/%u/%u, %02u:%02u:%02u\", \"lat\":%f, \"lng\":%f, \"altitude\":%f, \"fix\":%s, \"satellites\":%u, \"hdop\":%f}",this->GPS.date.month(),  this->GPS.date.day(), this->GPS.date.year(), this->GPS.time.hour(), this->GPS.time.minute(), this->GPS.time.second(), this->GPS.location.lat(), this->GPS.location.lng(), this->GPS.altitude.meters(), this->gFix.value(), this->GPS.satellites.value(), this->GPS.hdop.value() / 100.0);
+		snprintf(this->sentenceBuffer, sizeof(this->sentenceBuffer), "{\"datetime\":\"%u/%u/%u, %02u:%02u:%02u\", \"lat\":%lf, \"lng\":%lf, \"altitude\":%f, \"fix\":%s, \"satellites\":%u, \"hdop\":%f}",this->GPS.date.month(),  this->GPS.date.day(), this->GPS.date.year(), this->GPS.time.hour(), this->GPS.time.minute(), this->GPS.time.second(), this->GPS.location.lat(), this->GPS.location.lng(), this->GPS.altitude.meters(), this->gFix.value(), this->GPS.satellites.value(), this->GPS.hdop.value() / 100.0);
 		return this->sentenceBuffer;
 	}
 
