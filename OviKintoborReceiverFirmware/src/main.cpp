@@ -13,20 +13,24 @@
 #include <Arduino.h>
 #include <GPSSensor.h>
 #include <ThermalCam.h>
+#include <BluetoothSniffer.h>
 
 GPSSensor gps;
 ThermalCam cam;
+BluetoothSniffer sniffy;
 
 void setup()
 {
 	Serial.begin(9600);
     gps.begin();
 	cam.begin();
+	sniffy.begin();
 	delay(1000);
 }
 
 void loop()
 {
+	
 	gps.readGPSData();
 	Serial.println(cam.getPixelSentence());
 	Serial.print(gps.getFormattedGPSSentence());
