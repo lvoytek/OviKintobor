@@ -1,0 +1,13 @@
+C:\Users\Lena\SA3\Knuckles\bin\Debug\Knuckles.exe.config
+C:\Users\Lena\SA3\Knuckles\bin\Debug\Knuckles.exe
+C:\Users\Lena\SA3\Knuckles\bin\Debug\Knuckles.pdb
+C:\Users\Lena\SA3\Knuckles\bin\Debug\XInput.Wrapper.dll
+C:\Users\Lena\SA3\Knuckles\obj\Debug\Knuckles.csprojAssemblyReference.cache
+C:\Users\Lena\SA3\Knuckles\obj\Debug\Knuckles.csproj.CopyComplete
+C:\Users\Lena\SA3\Knuckles\obj\Debug\Knuckles.exe
+C:\Users\Lena\SA3\Knuckles\obj\Debug\Knuckles.pdb
+C:\Users\Lena\SA3\Knuckles\bin\Debug\SharpDX.dll
+C:\Users\Lena\SA3\Knuckles\bin\Debug\SharpDX.XInput.dll
+C:\Users\Lena\SA3\Knuckles\bin\Debug\SharpDX.pdb
+C:\Users\Lena\SA3\Knuckles\bin\Debug\SharpDX.XInput.pdb
+C:\Users\Lena\SA3\Knuckles\bin\Debug\SharpDX.XInput.xml
