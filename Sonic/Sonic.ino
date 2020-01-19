@@ -19,10 +19,86 @@ Adafruit_DCMotor *backRight = AFMS.getMotor(4);
 
 void setup() {
   // put your setup code here, to run once:
+  Serial.begin(9600);
 
+  //sonic is pretty fast
+  frontLeft->setSpeed(200);
+  frontRight->setSpeed(200);
+  backLeft->setSpeed(200);
+  backRight->setSpeed(200);
+
+  //just in case, lets stop them
+  frontLeft->run(RELEASE);
+  frontRight->run(RELEASE);
+  backLeft->run(RELEASE);
+  backRight->run(RELEASE);
+}
+
+void goForward(){
+  frontLeft->run(FORWARD);
+  frontRight->run(FORWARD);
+  backLeft->run(FORWARD);
+  backRight->run(FORWARD);
+
+  delay(250);
+
+  frontLeft->run(RELEASE);
+  frontRight->run(RELEASE);
+  backLeft->run(RELEASE);
+  backRight->run(RELEASE);
+}
+
+void goBackward(){
+  frontLeft->run(BACKWARD);
+  frontRight->run(BACKWARD);
+  backLeft->run(BACKWARD);
+  backRight->run(BACKWARD);
+
+  delay(250);
+
+  frontLeft->run(RELEASE);
+  frontRight->run(RELEASE);
+  backLeft->run(RELEASE);
+  backRight->run(RELEASE);
+}
+
+void turnLeft(){
+  frontLeft->run(BACKWARD);
+  backLeft->run(BACKWARD);
+
+  delay(250);
+
+  frontLeft->run(RELEASE);
+  backLeft->run(RELEASE);
+}
+
+void turnRight(){
+  frontRight->run(BACKWARD);
+  backRight->run(BACKWARD);
+
+  delay(250);
+
+  frontRight->run(RELEASE);
+  backRight->run(RELEASE);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  if(Serial.available()){
+    String command = Serial.readString().c_str();
+
+    if(command.equals("{fwd}")){
+      goForward();
+    }
+    if(command.equals("{back}")){
+      goBackward();
+    }
+    if(command.equals("{left}")){
+      turnLeft();
+    }
+    if(command.equals("{right}")){
+      turnRight();
+    }
+  }
+  delay(50);
 
 }
