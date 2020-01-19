@@ -14,9 +14,15 @@ and open the template in the editor.
        * element that contains the map. */
       #map {
         height: 100%;
-        width: 100%;
+        width: 50%;
+        float: left;
       }
-        
+      #cam {
+          height: 100%;
+          width: 50%;
+          float: right;
+      }
+      
         html, body {
         height: 100%;
         width: 100%;
@@ -27,10 +33,12 @@ and open the template in the editor.
         </style>
     </head>
     <body>
-        <div id="map"></div>
-    <script type="text/javascript" src="GoogleMapAPIASmith.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX2Ici-K6vSVx4aU8GwbEsmT6kg15xJmg&callback=initMap"
-    async defer></script>
+    <div id="map"></div>
+    <canvas id ="cam"></canvas>
+    <!--<script type="text/javascript" src="dev.json" ></script>-->
+    <script type="text/javascript" src="GoogleMapAPIASmith.js" async defer></script>  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX2Ici-K6vSVx4aU8GwbEsmT6kg15xJmg&callback=initMapAndCam"   async defer
+    ></script>
 
     </body>
 </html>

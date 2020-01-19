@@ -50,10 +50,10 @@ public class AEROSMITH extends Application {
         final WebView webView = new WebView();
         URL url = this.getClass().getResource("/folder/GoogleMapASmith.html");
         webView.getEngine().load(url.toString());
-        webView.setMaxWidth(screenBounds.getWidth()/2-20);
+        webView.setMaxWidth(screenBounds.getWidth());
         webView.setMaxHeight(screenHeight-100);
         root.getChildren().add(report);
-        report.setLeft(webView);
+        report.setCenter(webView);
         //report.setRight(new Pane());
         GridPane bottom = new GridPane();
         bottom.setMinHeight(30);
@@ -72,10 +72,10 @@ public class AEROSMITH extends Application {
 //        root.getChildren().add(options);
         OptionsButton opt = new OptionsButton();
         bottom.add(opt,0,0);
-        Camera camera = new Camera(25,screenWidth/2 - 20,screenHeight-120);
-        camera.setMaxWidth(screenWidth/2);
-        camera.setMaxHeight(screenHeight-100);  
-        report.setRight(camera);
+//        Camera camera = new Camera(25,screenWidth/2 - 20,screenHeight-120);
+//        camera.setMaxWidth(screenWidth/2);
+//        camera.setMaxHeight(screenHeight-100);  
+//        report.setRight(camera);
         
         bottom.setHgap(10);
         
