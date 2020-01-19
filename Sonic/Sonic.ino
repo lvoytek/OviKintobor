@@ -88,19 +88,19 @@ void loop() {
     
     if(command.equals("{fwd}")){
       Serial.println(command);  
-      goForward();
+      //goForward();
     }
     if(command.equals("{back}")){
       Serial.println(command);
-      goBackward();
+      //goBackward();
     }
     if(command.equals("{left}")){
       Serial.println(command);
-      turnLeft();
+      //turnLeft();
     }
-    if(command.equals("{right}")){
+    if(command.equals("{right}")){t 
       Serial.println(command);
-      turnRight();
+      //turnRight();
     }
   }
   delay(50);
