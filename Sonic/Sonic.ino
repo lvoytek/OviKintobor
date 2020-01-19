@@ -84,9 +84,10 @@ void turnRight(){
 
 void loop() {
   if(Serial.available()){
-    String command = Serial.readString().c_str();
-
+    String command = Serial.readStringUntil('\n');
+    
     if(command.equals("{fwd}")){
+      Serial.println(command);  
       goForward();
     }
     if(command.equals("{back}")){
