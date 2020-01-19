@@ -19,7 +19,8 @@
 #include <BLEScan.h>
 #include <BLEAdvertisedDevice.h>
 
-#define SCAN_TIME 30
+#define SCAN_TIME 5
+#define CUTOFF -60
 
 typedef struct BTDataPoint_t
 {
@@ -40,12 +41,10 @@ typedef struct BTDevice_t
     BTDevice_t * next;
 } BTDevice;
 
-class AdvertisedDeviceCallbacks : public BLEAdvertisedDeviceCallbacks
-{
-	void onResult(BLEAdvertisedDevice advertisedDevice)
-	{
-		Serial.printf("Advertised Device: %s \n", advertisedDevice.toString().c_str());
-	}
+class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
+    void onResult(BLEAdvertisedDevice advertisedDevice) {
+      Serial.printf("Advertised Device: %s \n", advertisedDevice.toString().c_str());
+    }
 };
 
 class BluetoothSniffer
@@ -83,22 +82,25 @@ protected:
 		return NULL;
 	}
 
+
+  BLEScan* pBLEScan;
+
 public:
     void begin()
     {
         BLEDevice::init("");
 
+        pBLEScan = BLEDevice::getScan(); //create new scan
+        pBLEScan->setAdvertisedDeviceCallbacks(new MyAdvertisedDeviceCallbacks());
+        pBLEScan->setActiveScan(true); //active scan uses more power, but get results faster
+        pBLEScan->setInterval(100);
+        pBLEScan->setWindow(99);
+
     }
 
     void scan(double lat, double lng, float alt)
     {
-        BLEScan *pBLEScan = BLEDevice::getScan(); //create new scan
-        pBLEScan->setAdvertisedDeviceCallbacks(new AdvertisedDeviceCallbacks());
-        pBLEScan->setActiveScan(true); //active scan uses more power, but get results faster
-        pBLEScan->setInterval(0x50);
-        pBLEScan->setWindow(0x30);
-
-    		BLEScanResults foundDevices = pBLEScan->start(SCAN_TIME);
+    		BLEScanResults foundDevices = pBLEScan->start(SCAN_TIME, false);
     		int count = foundDevices.getCount();
 
     		for (int i = 0; i < count; i++)
@@ -125,6 +127,8 @@ public:
               this->createDataPoint(this->tail->dataPoints, rssi, lat, lng, alt);
             }
     			}
+
+        pBLEScan->clearResults();
 		}
 	}
 

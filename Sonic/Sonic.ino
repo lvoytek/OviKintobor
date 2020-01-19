@@ -91,12 +91,15 @@ void loop() {
       goForward();
     }
     if(command.equals("{back}")){
+      Serial.println(command);
       goBackward();
     }
     if(command.equals("{left}")){
+      Serial.println(command);
       turnLeft();
     }
     if(command.equals("{right}")){
+      Serial.println(command);
       turnRight();
     }
   }
