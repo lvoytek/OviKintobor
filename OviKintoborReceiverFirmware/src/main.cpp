@@ -29,6 +29,7 @@ void runBLEScan(int)
 {
 	gps.readGPSData();
 	sniffy.scan(gps.getLat(), gps.getLng(), gps.getAlt());
+	sniffy.displayDatas();
 }
 
 void getGPSUpdate(int)
@@ -58,10 +59,9 @@ void setup()
 	comm.begin();
 	delay(1000);
 
-	//tasker.setInterval(runBLEScan, 40000, 0);
-	//tasker.setInterval(getGPSUpdate, 3000, 1);
-	//tasker.setInterval(getIRUpdate, 5000, 1);
-	tasker.setInterval(getRadioCmd, 1000, 0);
+	tasker.setInterval(runBLEScan, 30000, 0);
+	tasker.setInterval(getGPSUpdate, 3000, 1);
+	tasker.setInterval(getIRUpdate, 5000, 1);
 
 	tasker.run();
 }

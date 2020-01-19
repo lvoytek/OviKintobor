@@ -1,10 +1,10 @@
-/*  
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/. 
- * 
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
  * Author: Lena Voytek
- * 
+ *
  * GPSSensor.h
  * Handles interaction with the Serial GPS featherwing on the receiver
  * module
@@ -76,7 +76,7 @@ public:
 	// Get a JSON formatted GPS location/time sentence
 	char * getFormattedGPSSentence()
 	{
-		snprintf(this->sentenceBuffer, sizeof(this->sentenceBuffer), "{\"datetime\":\"%u/%u/%u, %02u:%02u:%02u\", \"lat\":%lf, \"lng\":%lf, \"altitude\":%f, \"fix\":%s, \"satellites\":%u, \"hdop\":%f}",this->GPS.date.month(),  this->GPS.date.day(), this->GPS.date.year(), this->GPS.time.hour(), this->GPS.time.minute(), this->GPS.time.second(), this->GPS.location.lat(), this->GPS.location.lng(), this->GPS.altitude.meters(), this->gFix.value(), this->GPS.satellites.value(), this->GPS.hdop.value() / 100.0);
+		snprintf(this->sentenceBuffer, sizeof(this->sentenceBuffer), "{\"type\":\"gps\", \"datetime\":\"%u/%u/%u, %02u:%02u:%02u\", \"lat\":%lf, \"lng\":%lf, \"altitude\":%f, \"fix\":%s, \"satellites\":%u, \"hdop\":%f}",this->GPS.date.month(),  this->GPS.date.day(), this->GPS.date.year(), this->GPS.time.hour(), this->GPS.time.minute(), this->GPS.time.second(), this->GPS.location.lat(), this->GPS.location.lng(), this->GPS.altitude.meters(), this->gFix.value(), this->GPS.satellites.value(), this->GPS.hdop.value() / 100.0);
 		return this->sentenceBuffer;
 	}
 
